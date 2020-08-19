@@ -1,127 +1,211 @@
 import React from 'react'
-
 import Layout from '../components/layout'
-import Image from '../components/image'
 import SEO from '../components/seo'
-
 import { makeStyles } from '@material-ui/core/styles'
+import { graphql } from 'gatsby'
+import Paper from '@material-ui/core/Paper'
 import Grid from '@material-ui/core/Grid'
-import Divider from '@material-ui/core/Divider'
-import ListSubheader from '@material-ui/core/ListSubheader'
-import List from '@material-ui/core/List'
-import ListItem from '@material-ui/core/ListItem'
-import ListItemIcon from '@material-ui/core/ListItemIcon'
-import ListItemText from '@material-ui/core/ListItemText'
-import Collapse from '@material-ui/core/Collapse'
-
-import StarIcon from '@material-ui/icons/Star'
-import InfoIcon from '@material-ui/icons/Info'
-import ExpandLess from '@material-ui/icons/ExpandLess'
-import ExpandMore from '@material-ui/icons/ExpandMore'
-import Done from '@material-ui/icons/Done'
-
-const useStyles = makeStyles(theme => ({
+import Card from '@material-ui/core/Card'
+import CardContent from '@material-ui/core/CardContent'
+import { Pie, HorizontalBar, Line, Polar, Bar } from 'react-chartjs-2'
+import { getRandomColor } from '../utils'
+const useStyles = makeStyles((theme) => ({
   root: {
-    width: '100%',
-    backgroundColor: theme.palette.background.paper,
+    flexGrow: 1,
   },
-  nested: {
-    paddingLeft: theme.spacing(4),
+  paper: {
+    padding: theme.spacing(2),
+    textAlign: 'center',
+    color: theme.palette.text.secondary,
   },
-}));
-
-const IndexPage = () => {
-
+}))
+const IndexPage = (props) => {
+  console.log(props)
   const classes = useStyles()
-  const [features, setFeatures] = React.useState(true)
-  const [info, setInfo] = React.useState(true)
+  let matchesPerYear = props.data.matchesPerYear.group
+  let matchesPerYearLabels = []
+  let matchesPerYearValues = []
+  matchesPerYear.forEach((data) => {
+    matchesPerYearLabels.push(data.fieldValue)
+    matchesPerYearValues.push(data.totalCount)
+  })
 
-  function handleClick(id) {
-    switch(id) {
-      case "features":
-        setFeatures(!features)
-        break;
-      case "info":
-        setInfo(!info)
-        break
+  let mostPlayerOfMatch = props.data.mostPlayerOfTheMatch.group
+    .sort((elem1, elem2) => elem2.totalCount - elem1.totalCount)
+    .slice(0, 5)
+  let mostPlayerOfMatchLabels = []
+  let mostPlayerOfMatchValues = []
+  mostPlayerOfMatch.forEach((data) => {
+    mostPlayerOfMatchLabels.push(data.fieldValue)
+    mostPlayerOfMatchValues.push(data.totalCount)
+  })
+
+  let matchesPerVenueLabels = []
+  let matchesPerVenueData = []
+  let matchesPerVenueColor = []
+  props.data.matchesPerVenue.group.forEach((data) => {
+    matchesPerVenueLabels.push(data.fieldValue)
+    matchesPerVenueData.push(data.totalCount)
+    matchesPerVenueColor.push(getRandomColor())
+  })
+
+  let matchesWonPerTeamLabels = []
+  let matchesWonPerTeamData = []
+  let matchesWonPerTeamDataColor = []
+  props.data.matchesWonPerTeam.group.forEach((data) => {
+    if (data.fieldValue) {
+      matchesWonPerTeamLabels.push(data.fieldValue)
+      matchesWonPerTeamData.push(data.totalCount)
+      matchesWonPerTeamDataColor.push(getRandomColor())
     }
-  }
-
-  return(
+  })
+  return (
     <Layout>
       <SEO title="Home" />
-      <Grid container spacing={3} justify="center">
-        <Grid item xs={2}>
-          <div style={{ maxWidth: `100px`, marginBottom: `1.45rem` }}>
-            <Image />
-          </div>
+      <div className={classes.root}>
+        <Grid container spacing={2}>
+          <Grid item sm={12} lg={6}>
+            Matches Played each year
+            <Line
+              type="line"
+              data={{
+                labels: matchesPerYearLabels,
+                datasets: [
+                  {
+                    label: 'Matches Per Year',
+                    data: matchesPerYearValues,
+                    fill: false,
+                    borderColor: '#5F7DF5',
+                    borderWidth: 1,
+                    backgroundColor: '#2196f3',
+                  },
+                ],
+              }}
+              options={{
+                responsive: true,
+                title: 'Matches Per Year',
+              }}
+            />
+          </Grid>
+          <Grid item sm={12} lg={6}>
+            Most Player of the matches
+            <Polar
+              type="polarArea"
+              data={{
+                labels: mostPlayerOfMatchLabels,
+                datasets: [
+                  {
+                    label: 'Top Players of the Match',
+                    data: mostPlayerOfMatchValues,
+                    backgroundColor: [
+                      '#3e95cd',
+                      '#8e5ea2',
+                      '#3cba9f',
+                      '#e8c3b9',
+                      '#c45850',
+                    ],
+                  },
+                ],
+              }}
+              options={{
+                responsive: true,
+              }}
+            />
+          </Grid>
+          <Grid item sm={12} lg={6}>
+            Win by Maximum Runs
+            <Card>
+              <CardContent>
+                <h3>{props.data.highestWinByRun.nodes[0].win_by_runs}</h3>
+                <div>
+                  <span style={{ fontStyle: 'italic' }}>
+                    {props.data.highestWinByRun.nodes[0].winner}
+                  </span>{' '}
+                  &nbsp;
+                  <span>{props.data.highestWinByRun.nodes[0].season}</span>
+                </div>
+              </CardContent>
+            </Card>
+          </Grid>
+          <Grid item sm={12} lg={6}>
+            Matches Per Venue
+            <HorizontalBar
+              data={{
+                labels: matchesPerVenueLabels,
+                datasets: [
+                  {
+                    label: 'Matches Per Venue',
+                    backgroundColor: matchesPerVenueColor,
+                    data: matchesPerVenueData,
+                  },
+                ],
+              }}
+              options={{
+                responsive: true,
+              }}
+            />
+          </Grid>
+          <Grid item sm={12}>
+            Matches Won Per Team
+            <Bar
+              options={{
+                responsive: true,
+              }}
+              data={{
+                labels: matchesWonPerTeamLabels,
+                datasets: [
+                  {
+                    label: 'Matches Won By Team',
+                    data: matchesWonPerTeamData,
+                    backgroundColor: matchesWonPerTeamDataColor,
+                  },
+                ],
+              }}
+            />
+          </Grid>
         </Grid>
-        <Grid item xs={8}>
-          <h1>Gatsby Material UI Starter</h1>
-          <h5>
-            A responsive, minimalist Gatsby starter based on the world's most
-            popular React UI framework.
-          </h5>
-        </Grid>
-      </Grid>
-      <Divider />
-      <List
-        component="nav"
-        className={classes.root}
-      >
-      <ListItem id="features" button onClick={() => handleClick("features")}>
-        <ListItemIcon>
-          <StarIcon />
-        </ListItemIcon>
-        <ListItemText primary="Features" />
-        {features ? <ExpandLess /> : <ExpandMore />}
-      </ListItem>
-      <Collapse in={!features} timeout="auto" unmountOnExit>
-        <List component="div" disablePadding>
-          <ListItem button className={classes.nested}>
-            <ListItemIcon><Done /></ListItemIcon>
-            <ListItemText primary="Material UI Framework" />
-          </ListItem>
-          <ListItem button className={classes.nested}>
-            <ListItemIcon><Done /></ListItemIcon>
-            <ListItemText primary="Progressive Web App" />
-          </ListItem>
-          <ListItem button className={classes.nested}>
-            <ListItemIcon><Done /></ListItemIcon>
-            <ListItemText primary="SEO" />
-          </ListItem>
-          <ListItem button className={classes.nested}>
-            <ListItemIcon><Done /></ListItemIcon>
-            <ListItemText primary="Offline Support" />
-          </ListItem>
-          <ListItem button className={classes.nested}>
-            <ListItemIcon><Done /></ListItemIcon>
-            <ListItemText primary="Roboto Typeface (self hosted)" />
-          </ListItem>
-        </List>
-      </Collapse>
-      <ListItem button onClick={() => handleClick("info")}>
-        <ListItemIcon>
-          <InfoIcon />
-        </ListItemIcon>
-        <ListItemText primary="Info" />
-        {info ? <ExpandLess /> : <ExpandMore />}
-      </ListItem>
-      <Collapse in={!info} timeout="auto" unmountOnExit>
-        <List component="div" disablePadding>
-          <ListItem button className={classes.nested}>
-            <ListItemIcon><Done /></ListItemIcon>
-            <ListItemText primary="Based on Gatsby Default Starter" />
-          </ListItem>
-          <ListItem button className={classes.nested}>
-            <ListItemIcon><Done /></ListItemIcon>
-            <ListItemText primary="Uses Gatsby Material UI Plugin" />
-          </ListItem>
-        </List>
-      </Collapse>
-    </List>
+      </div>
     </Layout>
   )
 }
-
 export default IndexPage
+
+export const pageQuery = graphql`
+  query {
+    matchesPerYear: allMatchesCsv {
+      group(field: season) {
+        fieldValue
+        totalCount
+      }
+    }
+    mostPlayerOfTheMatch: allMatchesCsv {
+      group(field: player_of_match) {
+        fieldValue
+        totalCount
+      }
+    }
+
+    highestWinByRun: allMatchesCsv(
+      sort: { fields: win_by_runs, order: DESC }
+      limit: 1
+    ) {
+      nodes {
+        winner
+        win_by_runs
+        season
+      }
+    }
+    matchesPerVenue: allMatchesCsv {
+      group(field: venue) {
+        fieldValue
+        totalCount
+      }
+    }
+    matchesWonPerTeam: allMatchesCsv {
+      group(field: winner) {
+        totalCount
+        fieldValue
+      }
+    }
+  }
+`
