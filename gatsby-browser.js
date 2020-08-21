@@ -4,4 +4,11 @@
  * See: https://www.gatsbyjs.org/docs/browser-apis/
  */
 
-require('typeface-roboto');
+require('typeface-roboto')
+
+exports.onRouteUpdateDelayed = () => {
+  document.getElementById('___loader').style.display = 'flex'
+}
+exports.onRouteUpdate = () => {
+  document.getElementById('___loader').style.display = 'none'
+}

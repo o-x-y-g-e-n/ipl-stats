@@ -1,9 +1,13 @@
 import React from 'react'
-
-const SeasonDetail = ({pageContext}) => {
-  const {season} = pageContext;
+import Layout from '../components/layout'
+const SeasonDetail = ({ pageContext }) => {
+  const { season } = pageContext
   console.log(pageContext)
-  return <h1>{"You rock"}</h1>
+  return (
+    <Layout>
+      <h1>{'You rock'}</h1>
+    </Layout>
+  )
 }
 
 export default SeasonDetail

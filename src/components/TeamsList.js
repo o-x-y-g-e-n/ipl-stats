@@ -5,6 +5,7 @@ import ListItemText from '@material-ui/core/ListItemText'
 import Typography from '@material-ui/core/Typography'
 import { makeStyles, useTheme } from '@material-ui/core/styles'
 import { useStaticQuery, graphql } from 'gatsby'
+import { Link } from 'gatsby'
 const useStyles = makeStyles((theme) => ({
   // necessary for content to be below app bar
   toolbar: theme.mixins.toolbar,
@@ -31,9 +32,11 @@ const TeamsList = (props) => {
       </div>
       <List>
         {data.allMatchesCsv.distinct.map((text, index) => (
-          <ListItem button key={text}>
-            <ListItemText primary={text} />
-          </ListItem>
+          <Link to={`/team/${text}`}>
+            <ListItem button key={text}>
+              <ListItemText primary={text} />
+            </ListItem>
+          </Link>
         ))}
       </List>
     </div>

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Layout from '../components/layout'
 import SEO from '../components/seo'
 import { makeStyles } from '@material-ui/core/styles'
@@ -20,7 +20,6 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 const IndexPage = (props) => {
-  console.log(props)
   const classes = useStyles()
   let matchesPerYear = props.data.matchesPerYear.group
   let matchesPerYearLabels = []
@@ -59,6 +58,7 @@ const IndexPage = (props) => {
       matchesWonPerTeamDataColor.push(getRandomColor())
     }
   })
+
   return (
     <Layout>
       <SEO title="Home" />
@@ -97,13 +97,7 @@ const IndexPage = (props) => {
                   {
                     label: 'Top Players of the Match',
                     data: mostPlayerOfMatchValues,
-                    backgroundColor: [
-                      '#3e95cd',
-                      '#8e5ea2',
-                      '#3cba9f',
-                      '#e8c3b9',
-                      '#c45850',
-                    ],
+                    backgroundColor: getRandomColor(5),
                   },
                 ],
               }}
@@ -135,7 +129,9 @@ const IndexPage = (props) => {
                 datasets: [
                   {
                     label: 'Matches Per Venue',
-                    backgroundColor: matchesPerVenueColor,
+                    backgroundColor: getRandomColor(
+                      matchesPerVenueLabels.length
+                    ),
                     data: matchesPerVenueData,
                   },
                 ],
@@ -157,7 +153,9 @@ const IndexPage = (props) => {
                   {
                     label: 'Matches Won By Team',
                     data: matchesWonPerTeamData,
-                    backgroundColor: matchesWonPerTeamDataColor,
+                    backgroundColor: getRandomColor(
+                      matchesPerVenueLabels.length
+                    ),
                   },
                 ],
               }}

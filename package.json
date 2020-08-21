@@ -24,6 +24,7 @@
     "react-dom": "^16.8.0",
     "react-helmet": "^6.1.0",
     "react-hot-loader": "^4.12.21",
+    "react-virtualized": "^9.22.2",
     "typeface-roboto": "0.0.75"
   },
   "devDependencies": {
