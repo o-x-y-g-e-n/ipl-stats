@@ -4,11 +4,10 @@ import { makeStyles } from '@material-ui/core/styles'
 import Paper from '@material-ui/core/Paper'
 import Grid from '@material-ui/core/Grid'
 import {
-  getUnqiuePlayersOfMatch,
-  getRandomColor,
-  arrayToObject,
-} from '../utils'
-import { Bar, Doughnut } from 'react-chartjs-2'
+  TopPlayersOfMatch,
+  MatchesWonAndLost,
+  TossWonAndLost,
+} from '../components/charts'
 import TeamTable from '../components/TeamTable'
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -23,127 +22,34 @@ const useStyles = makeStyles((theme) => ({
 const TeamDetail = (props) => {
   const classes = useStyles()
   const { team } = props.pageContext
-
-  // Players and Players of Match
-  let { playersOfMatch, playersOfMatchColor } = getUnqiuePlayersOfMatch(
-    props.data.playersOfTheMatch.nodes
-  )
-  // Wins and Losses by season
-  let winsPerSeason = arrayToObject(props.data.winsPerSeason.group)
-  console.log(props.data)
-  let lossPerSeason1 = arrayToObject(props.data.matchesLosPerTeam1.group)
-  let lossPerSeason2 = arrayToObject(props.data.matchesLosPerTeam2.group)
-  Object.keys(lossPerSeason1).forEach((val) => {
-    if (lossPerSeason2.hasOwnProperty(val)) {
-      lossPerSeason1[val] = lossPerSeason1[val] + lossPerSeason2[val]
-    }
-  })
-
-  //   toss win and loss
-  let tossWinPerSeason = arrayToObject(props.data.tossWinPerSeason.group)
-  let tossLossPerSeason1 = arrayToObject(props.data.tossLossPerSeason1.group)
-  let tossLossPerSeason2 = arrayToObject(props.data.tossLossPerSeason2.group)
-  Object.keys(tossLossPerSeason1).forEach((val) => {
-    if (tossLossPerSeason2.hasOwnProperty(val)) {
-      tossLossPerSeason1[val] =
-        tossLossPerSeason1[val] + tossLossPerSeason2[val]
-    }
-  })
   let table = props.data.table1.nodes.concat(props.data.table2.nodes)
+
   return (
     <Layout>
       <h1 className={classes.title}>{team}</h1>
       <div className={classes.root}>
         <Grid container spacing={2}>
-          <Grid item sm={12} lg={12}>
+          <Grid item xs={12} sm={12} md={12} lg={12}>
             Top Players of all seasons
-            <Doughnut
-              options={{
-                responsive: true,
-                // maintainAspectRatio: true,
-              }}
-              data={{
-                labels: Object.keys(playersOfMatch),
-                datasets: [
-                  {
-                    backgroundColor: playersOfMatchColor,
-                    data: Object.values(playersOfMatch),
-                  },
-                ],
-              }}
-            />
+            <TopPlayersOfMatch data={props.data.playersOfTheMatch.nodes} />
           </Grid>
-          <Grid item sm={12} lg={6}>
+          <Grid item xs={12} sm={12} md={12} lg={6}>
             Matches Won & Lost over years
-            <Bar
-              options={{
-                responsive: true,
-                scales: {
-                  xAxes: [
-                    {
-                      stacked: true,
-                    },
-                  ],
-                  yAxes: [
-                    {
-                      stacked: true,
-                    },
-                  ],
-                },
-              }}
-              data={{
-                labels: Object.keys(winsPerSeason),
-                datasets: [
-                  {
-                    label: 'Won Per Season',
-                    backgroundColor: 'rgba(46, 44, 211,0.7)',
-                    data: Object.values(winsPerSeason),
-                  },
-                  {
-                    label: 'Lost Per Season',
-                    backgroundColor: 'rgba(215, 44, 44, 0.7)',
-                    data: Object.values(lossPerSeason1),
-                  },
-                ],
-              }}
+            <MatchesWonAndLost
+              win={props.data.winsPerSeason.group}
+              loss1={props.data.matchesLosPerTeam1.group}
+              loss2={props.data.matchesLosPerTeam2.group}
             />
           </Grid>
-          <Grid item sm={12} lg={6}>
+          <Grid item xs={12} sm={12} md={12} lg={6}>
             Toss Won & Lost over years
-            <Bar
-              options={{
-                responsive: true,
-                scales: {
-                  xAxes: [
-                    {
-                      stacked: true,
-                    },
-                  ],
-                  yAxes: [
-                    {
-                      stacked: true,
-                    },
-                  ],
-                },
-              }}
-              data={{
-                labels: Object.keys(tossWinPerSeason),
-                datasets: [
-                  {
-                    label: 'Toss Won Per Season',
-                    backgroundColor: 'rgba(46, 44, 211,0.7)',
-                    data: Object.values(tossWinPerSeason),
-                  },
-                  {
-                    label: 'Toss Lost Per Season',
-                    backgroundColor: 'rgba(215, 44, 44, 0.7)',
-                    data: Object.values(tossLossPerSeason1),
-                  },
-                ],
-              }}
+            <TossWonAndLost
+              win={props.data.tossWinPerSeason.group}
+              loss1={props.data.tossLossPerSeason1.group}
+              loss2={props.data.tossLossPerSeason2.group}
             />
           </Grid>
-          <Grid item sm={12} lg={12} style={{ flex: 1 }}>
+          <Grid item xs={12} sm={12} md={12} lg={12} style={{ flex: 1 }}>
             <TeamTable data={table} />
           </Grid>
         </Grid>

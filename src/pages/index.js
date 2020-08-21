@@ -1,14 +1,16 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import Layout from '../components/layout'
 import SEO from '../components/seo'
 import { makeStyles } from '@material-ui/core/styles'
 import { graphql } from 'gatsby'
-import Paper from '@material-ui/core/Paper'
 import Grid from '@material-ui/core/Grid'
-import Card from '@material-ui/core/Card'
-import CardContent from '@material-ui/core/CardContent'
-import { Pie, HorizontalBar, Line, Polar, Bar } from 'react-chartjs-2'
-import { getRandomColor } from '../utils'
+import {
+  MatchesPlayedEachYear,
+  MostPlayerOfTheMatches,
+  WinByMaxRuns,
+  MatchesWonPerTeam,
+  MatchesPerVenue,
+} from '../components/charts'
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -21,43 +23,6 @@ const useStyles = makeStyles((theme) => ({
 }))
 const IndexPage = (props) => {
   const classes = useStyles()
-  let matchesPerYear = props.data.matchesPerYear.group
-  let matchesPerYearLabels = []
-  let matchesPerYearValues = []
-  matchesPerYear.forEach((data) => {
-    matchesPerYearLabels.push(data.fieldValue)
-    matchesPerYearValues.push(data.totalCount)
-  })
-
-  let mostPlayerOfMatch = props.data.mostPlayerOfTheMatch.group
-    .sort((elem1, elem2) => elem2.totalCount - elem1.totalCount)
-    .slice(0, 5)
-  let mostPlayerOfMatchLabels = []
-  let mostPlayerOfMatchValues = []
-  mostPlayerOfMatch.forEach((data) => {
-    mostPlayerOfMatchLabels.push(data.fieldValue)
-    mostPlayerOfMatchValues.push(data.totalCount)
-  })
-
-  let matchesPerVenueLabels = []
-  let matchesPerVenueData = []
-  let matchesPerVenueColor = []
-  props.data.matchesPerVenue.group.forEach((data) => {
-    matchesPerVenueLabels.push(data.fieldValue)
-    matchesPerVenueData.push(data.totalCount)
-    matchesPerVenueColor.push(getRandomColor())
-  })
-
-  let matchesWonPerTeamLabels = []
-  let matchesWonPerTeamData = []
-  let matchesWonPerTeamDataColor = []
-  props.data.matchesWonPerTeam.group.forEach((data) => {
-    if (data.fieldValue) {
-      matchesWonPerTeamLabels.push(data.fieldValue)
-      matchesWonPerTeamData.push(data.totalCount)
-      matchesWonPerTeamDataColor.push(getRandomColor())
-    }
-  })
 
   return (
     <Layout>
@@ -66,100 +31,29 @@ const IndexPage = (props) => {
         <Grid container spacing={2}>
           <Grid item sm={12} lg={6}>
             Matches Played each year
-            <Line
-              type="line"
-              data={{
-                labels: matchesPerYearLabels,
-                datasets: [
-                  {
-                    label: 'Matches Per Year',
-                    data: matchesPerYearValues,
-                    fill: false,
-                    borderColor: '#5F7DF5',
-                    borderWidth: 1,
-                    backgroundColor: '#2196f3',
-                  },
-                ],
-              }}
-              options={{
-                responsive: true,
-                title: 'Matches Per Year',
-              }}
-            />
+            <MatchesPlayedEachYear data={props.data.matchesPerYear.group} />
           </Grid>
           <Grid item sm={12} lg={6}>
             Most Player of the matches
-            <Polar
-              type="polarArea"
-              data={{
-                labels: mostPlayerOfMatchLabels,
-                datasets: [
-                  {
-                    label: 'Top Players of the Match',
-                    data: mostPlayerOfMatchValues,
-                    backgroundColor: getRandomColor(5),
-                  },
-                ],
-              }}
-              options={{
-                responsive: true,
-              }}
+            <MostPlayerOfTheMatches
+              data={props.data.mostPlayerOfTheMatch.group}
             />
           </Grid>
           <Grid item sm={12} lg={6}>
             Win by Maximum Runs
-            <Card>
-              <CardContent>
-                <h3>{props.data.highestWinByRun.nodes[0].win_by_runs}</h3>
-                <div>
-                  <span style={{ fontStyle: 'italic' }}>
-                    {props.data.highestWinByRun.nodes[0].winner}
-                  </span>{' '}
-                  &nbsp;
-                  <span>{props.data.highestWinByRun.nodes[0].season}</span>
-                </div>
-              </CardContent>
-            </Card>
+            <WinByMaxRuns
+              run={props.data.highestWinByRun.nodes[0].win_by_runs}
+              winner={props.data.highestWinByRun.nodes[0].winner}
+              season={props.data.highestWinByRun.nodes[0].season}
+            />
           </Grid>
           <Grid item sm={12} lg={6}>
             Matches Per Venue
-            <HorizontalBar
-              data={{
-                labels: matchesPerVenueLabels,
-                datasets: [
-                  {
-                    label: 'Matches Per Venue',
-                    backgroundColor: getRandomColor(
-                      matchesPerVenueLabels.length
-                    ),
-                    data: matchesPerVenueData,
-                  },
-                ],
-              }}
-              options={{
-                responsive: true,
-              }}
-            />
+            <MatchesPerVenue data={props.data.matchesPerVenue.group} />
           </Grid>
           <Grid item sm={12}>
             Matches Won Per Team
-            <Bar
-              options={{
-                responsive: true,
-              }}
-              data={{
-                labels: matchesWonPerTeamLabels,
-                datasets: [
-                  {
-                    label: 'Matches Won By Team',
-                    data: matchesWonPerTeamData,
-                    backgroundColor: getRandomColor(
-                      matchesPerVenueLabels.length
-                    ),
-                  },
-                ],
-              }}
-            />
+            <MatchesWonPerTeam data={props.data.matchesWonPerTeam.group} />
           </Grid>
         </Grid>
       </div>

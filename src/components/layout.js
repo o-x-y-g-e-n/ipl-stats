@@ -38,9 +38,9 @@ const Layout = ({ children }) => {
             >
               <main>{children}</main>
               <footer style={{ paddingTop: 10 }}>
-                © {new Date().getFullYear()}, Built with
+                © {new Date().getFullYear()}, Made with
                 {` `}
-                Made with <span style={{ color: '#e25555' }}>&#9829;</span> in
+                 <span style={{ color: '#e25555' }}>&#9829;</span> in
                 React
               </footer>
             </div>

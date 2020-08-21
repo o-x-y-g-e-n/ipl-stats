@@ -6,6 +6,13 @@
 
 require('typeface-roboto')
 
+exports.onClientEntry = () => {
+  document.getElementById('___loader').style.display = 'flex'
+}
+
+exports.onInitialClientRender = () => {
+  document.getElementById('___loader').style.display = 'none'
+}
 exports.onRouteUpdateDelayed = () => {
   document.getElementById('___loader').style.display = 'flex'
 }
