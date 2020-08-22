@@ -1,4 +1,4 @@
-# IPL-STATS
+# **[IPL-STATS](https://o-x-y-g-e-n.github.io/ipl-stats/)**
 
 Just a fandom website to display IPL Trivia!
 
@@ -149,6 +149,13 @@ exports.createPages = async ({ graphql, actions }) => {
 ```
 - Here you pass the data and the template it's associated with. Also the parameter. In our case `season`.
 - If you have read all of these, you are an amazing human being. Thank you.🙌
+
+### Lighthouse Results
+***Performance***
+![image-1](https://i.ibb.co/qRybVCW/Screenshot-12.png)
+
+***PWA***
+![image-1](https://i.ibb.co/Np89Ww0/Screenshot-14.png)
 ### Plugins
 
 ipl-stats is currently extended with the following Gatsby plugins.
