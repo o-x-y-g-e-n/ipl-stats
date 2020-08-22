@@ -150,12 +150,23 @@ exports.createPages = async ({ graphql, actions }) => {
 - Here you pass the data and the template it's associated with. Also the parameter. In our case `season`.
 - If you have read all of these, you are an amazing human being. Thank you.🙌
 
+> Can you make it even better?
+- Introduce Themes (Dark & Light)🌗
+- Better Performance (maybe SSR)🙆
+- Work on the `Season` Pages.👀
+- Better Loading Components.🐇
+- Improve precision over the `LoadingAnimation` Component (Deep dive in `material-ui/skeleton`)🐬 
+
 ### Lighthouse Results
+
 ***Performance***
+
 ![image-1](https://i.ibb.co/qRybVCW/Screenshot-12.png)
 
 ***PWA***
+
 ![image-1](https://i.ibb.co/Np89Ww0/Screenshot-14.png)
+
 ### Plugins
 
 ipl-stats is currently extended with the following Gatsby plugins.
@@ -175,6 +186,7 @@ ipl-stats is currently extended with the following Gatsby plugins.
 ![image-2](https://i.ibb.co/ry47XR7/Capture1.png)
 
 ![image3](https://i.ibb.co/T1Yj4gD/Screenshot-9.png)
+
 
 ### Run Locally
 Start the project:
