@@ -163,10 +163,11 @@ ipl-stats is currently extended with the following Gatsby plugins.
 - Every Plugin makes sense!
 
 ### Images
-![image-1](https://ibb.co/wCPxcBJ)
-![image-2](https://ibb.co/ry47XR7)
-![image3](https://ibb.co/WWgfV4W)
-![image4](https://ibb.co/PMFXc6s)
+![image-1](https://i.ibb.co/wCPxcBJ/Capture.png)
+
+![image-2](https://i.ibb.co/ry47XR7/Capture1.png)
+
+![image3](https://i.ibb.co/T1Yj4gD/Screenshot-9.png)
 
 ### Run Locally
 Start the project:
