@@ -2,7 +2,7 @@ import React from 'react'
 import { Polar } from 'react-chartjs-2'
 import { arrayToObject } from '../../../utils'
 import { getRandomColor } from '../../../utils'
-export const MostPlayerOfTheMatches = (props) => {
+function MostPlayerOfTheMatches(props) {
   let mostPlayerOfMatch = props.data
     .sort((elem1, elem2) => elem2.totalCount - elem1.totalCount)
     .slice(0, 5)
@@ -26,3 +26,4 @@ export const MostPlayerOfTheMatches = (props) => {
     />
   )
 }
+export default MostPlayerOfTheMatches

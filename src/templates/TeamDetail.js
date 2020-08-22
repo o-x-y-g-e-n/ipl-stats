@@ -1,14 +1,22 @@
-import React from 'react'
+import React, { Suspense } from 'react'
 import Layout from '../components/layout'
 import { makeStyles } from '@material-ui/core/styles'
 import Paper from '@material-ui/core/Paper'
 import Grid from '@material-ui/core/Grid'
-import {
-  TopPlayersOfMatch,
-  MatchesWonAndLost,
-  TossWonAndLost,
-} from '../components/charts'
-import TeamTable from '../components/TeamTable'
+import LazyLoad from 'react-lazyload'
+import LoadingAnimation from '../components/LoadingAnimation'
+const TopPlayersOfMatch = React.lazy(() =>
+  import('../components/charts/team/TopPlayersOfMatch')
+)
+const MatchesWonAndLost = React.lazy(() =>
+  import('../components/charts/team/MatchesWonAndLost')
+)
+const TossWonAndLost = React.lazy(() =>
+  import('../components/charts/team/TossWonAndLost')
+)
+
+const TeamTable = React.lazy(() => import('../components/TeamTable'))
+
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -31,26 +39,78 @@ const TeamDetail = (props) => {
         <Grid container spacing={2}>
           <Grid item xs={12} sm={12} md={12} lg={12}>
             Top Players of all seasons
-            <TopPlayersOfMatch data={props.data.playersOfTheMatch.nodes} />
+            <LazyLoad once={true}>
+              <Suspense fallback={<LoadingAnimation />}>
+                <TopPlayersOfMatch data={props.data.playersOfTheMatch.nodes} />
+              </Suspense>
+            </LazyLoad>
+            <p>
+              Vivamus a leo sollicitudin, eleifend dolor vel, tincidunt ipsum.
+              Donec tempus elit egestas mollis maximus. Nunc eu odio a purus
+              dignissim viverra. Sed orci nibh, consequat eget nibh vel,
+              ultrices luctus ante. Vivamus vehicula odio eu est tincidunt
+              venenatis. Cras facilisis at orci eu iaculis. Etiam malesuada
+              mauris vestibulum porta fringilla. Aenean maximus felis nunc, ut
+              mattis leo hendrerit et. Cras maximus nec velit vitae tincidunt.
+              Aliquam a mauris libero. Interdum et malesuada fames ac ante ipsum
+              primis in faucibus. Pellentesque blandit vitae purus a imperdiet.
+              Quisque et eros leo. Ut feugiat mattis luctus.
+            </p>
           </Grid>
           <Grid item xs={12} sm={12} md={12} lg={6}>
             Matches Won & Lost over years
-            <MatchesWonAndLost
-              win={props.data.winsPerSeason.group}
-              loss1={props.data.matchesLosPerTeam1.group}
-              loss2={props.data.matchesLosPerTeam2.group}
-            />
+            <LazyLoad once={true} placeholder={<div>Loading...</div>}>
+              <Suspense fallback={<LoadingAnimation />}>
+                <MatchesWonAndLost
+                  win={props.data.winsPerSeason.group}
+                  loss1={props.data.matchesLosPerTeam1.group}
+                  loss2={props.data.matchesLosPerTeam2.group}
+                />
+              </Suspense>
+            </LazyLoad>
+            <p>
+              Vivamus a leo sollicitudin, eleifend dolor vel, tincidunt ipsum.
+              Donec tempus elit egestas mollis maximus. Nunc eu odio a purus
+              dignissim viverra. Sed orci nibh, consequat eget nibh vel,
+              ultrices luctus ante. Vivamus vehicula odio eu est tincidunt
+              venenatis. Cras facilisis at orci eu iaculis. Etiam malesuada
+              mauris vestibulum porta fringilla. Aenean maximus felis nunc, ut
+              mattis leo hendrerit et. Cras maximus nec velit vitae tincidunt.
+              Aliquam a mauris libero. Interdum et malesuada fames ac ante ipsum
+              primis in faucibus. Pellentesque blandit vitae purus a imperdiet.
+              Quisque et eros leo. Ut feugiat mattis luctus.
+            </p>
           </Grid>
           <Grid item xs={12} sm={12} md={12} lg={6}>
             Toss Won & Lost over years
-            <TossWonAndLost
-              win={props.data.tossWinPerSeason.group}
-              loss1={props.data.tossLossPerSeason1.group}
-              loss2={props.data.tossLossPerSeason2.group}
-            />
+            <LazyLoad once={true} placeholder={<div>Loading...</div>}>
+              <Suspense fallback={<LoadingAnimation />}>
+                <TossWonAndLost
+                  win={props.data.tossWinPerSeason.group}
+                  loss1={props.data.tossLossPerSeason1.group}
+                  loss2={props.data.tossLossPerSeason2.group}
+                />
+              </Suspense>
+            </LazyLoad>
+            <p>
+              Vivamus a leo sollicitudin, eleifend dolor vel, tincidunt ipsum.
+              Donec tempus elit egestas mollis maximus. Nunc eu odio a purus
+              dignissim viverra. Sed orci nibh, consequat eget nibh vel,
+              ultrices luctus ante. Vivamus vehicula odio eu est tincidunt
+              venenatis. Cras facilisis at orci eu iaculis. Etiam malesuada
+              mauris vestibulum porta fringilla. Aenean maximus felis nunc, ut
+              mattis leo hendrerit et. Cras maximus nec velit vitae tincidunt.
+              Aliquam a mauris libero. Interdum et malesuada fames ac ante ipsum
+              primis in faucibus. Pellentesque blandit vitae purus a imperdiet.
+              Quisque et eros leo. Ut feugiat mattis luctus.
+            </p>
           </Grid>
           <Grid item xs={12} sm={12} md={12} lg={12} style={{ flex: 1 }}>
-            <TeamTable data={table} />
+            <LazyLoad once={true} placeholder={<div>Loading...</div>}>
+              <Suspense fallback={<LoadingAnimation />}>
+                <TeamTable data={table} />
+              </Suspense>
+            </LazyLoad>
           </Grid>
         </Grid>
       </div>

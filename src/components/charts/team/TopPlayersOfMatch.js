@@ -3,18 +3,8 @@ import { makeStyles } from '@material-ui/core/styles'
 import useMediaQuery from '@material-ui/core/useMediaQuery'
 import { Doughnut } from 'react-chartjs-2'
 import { getUnqiuePlayersOfMatch } from '../../../utils'
-const useStyles = makeStyles((theme) => ({
-  root: {
-    flexGrow: 1,
-  },
-  paper: {
-    padding: theme.spacing(2),
-    textAlign: 'center',
-    color: theme.palette.text.secondary,
-  },
-}))
 
-export const TopPlayersOfMatch = (props) => {
+function TopPlayersOfMatch(props) {
   let { playersOfMatch, playersOfMatchColor } = getUnqiuePlayersOfMatch(
     props.data
   )
@@ -41,3 +31,4 @@ export const TopPlayersOfMatch = (props) => {
     />
   )
 }
+export default TopPlayersOfMatch

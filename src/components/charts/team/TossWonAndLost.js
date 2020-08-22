@@ -1,8 +1,7 @@
 import React from 'react'
 import { Bar } from 'react-chartjs-2'
 import { arrayToObject } from '../../../utils'
-
-export const TossWonAndLost = (props) => {
+function TossWonAndLost(props) {
   let tossWinPerSeason = arrayToObject(props.win)
   let tossLossPerSeason1 = arrayToObject(props.loss1)
   let tossLossPerSeason2 = arrayToObject(props.loss2)
@@ -47,3 +46,5 @@ export const TossWonAndLost = (props) => {
     />
   )
 }
+
+export default TossWonAndLost

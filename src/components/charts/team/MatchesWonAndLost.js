@@ -2,7 +2,7 @@ import React from 'react'
 import { Bar } from 'react-chartjs-2'
 import { arrayToObject } from '../../../utils'
 
-export const MatchesWonAndLost = (props) => {
+function MatchesWonAndLost(props) {
   let winsPerSeason = arrayToObject(props.win)
   console.log(props.data)
   let lossPerSeason1 = arrayToObject(props.loss1)
@@ -48,3 +48,4 @@ export const MatchesWonAndLost = (props) => {
     />
   )
 }
+export default MatchesWonAndLost

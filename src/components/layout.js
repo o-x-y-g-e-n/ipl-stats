@@ -1,10 +1,11 @@
-import React from 'react'
+import React, { Suspense } from 'react'
 import PropTypes from 'prop-types'
 import { StaticQuery, graphql } from 'gatsby'
-import Sidebar from './sidebar'
 import { makeStyles } from '@material-ui/core/styles'
-
+import LazyLoad from 'react-lazyload'
 import './layout.css'
+import Sidebar from './sidebar'
+
 const useStyles = makeStyles((theme) => ({
   backdrop: {
     zIndex: theme.zIndex.drawer + 1,
@@ -26,26 +27,27 @@ const Layout = ({ children }) => {
         }
       `}
       render={(data) => (
-        <Sidebar title={data.site.siteMetadata.title}>
-          <div style={{ minHeight: '100vh', backgroundColor: '#FFF' }}>
-            {/* <Header siteTitle={data.site.siteMetadata.title} /> */}
-            <div
-              style={{
-                margin: `0 auto`,
-                maxWidth: 960,
-                padding: `0px 1.0875rem 1.45rem`,
-              }}
-            >
-              <main>{children}</main>
-              <footer style={{ paddingTop: 10 }}>
-                © {new Date().getFullYear()}, Made with
-                {` `}
-                 <span style={{ color: '#e25555' }}>&#9829;</span> in
-                React
-              </footer>
+        <LazyLoad>
+          <Sidebar title={data.site.siteMetadata.title}>
+            <div style={{ minHeight: '100vh', backgroundColor: '#FFF' }}>
+              {/* <Header siteTitle={data.site.siteMetadata.title} /> */}
+              <div
+                style={{
+                  margin: `0 auto`,
+                  maxWidth: 960,
+                  padding: `0px 1.0875rem 1.45rem`,
+                }}
+              >
+                <main>{children}</main>
+                <footer style={{ paddingTop: 10 }}>
+                  © {new Date().getFullYear()}, Made with
+                  {` `}
+                  <span style={{ color: '#e25555' }}>&#9829;</span> in React
+                </footer>
+              </div>
             </div>
-          </div>
-        </Sidebar>
+          </Sidebar>
+        </LazyLoad>
       )}
     />
   )

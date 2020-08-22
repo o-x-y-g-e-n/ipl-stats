@@ -2,7 +2,8 @@ import React from 'react'
 import { Bar } from 'react-chartjs-2'
 import { arrayToObject } from '../../../utils'
 import { getRandomColor } from '../../../utils'
-export const MatchesWonPerTeam = (props) => {
+
+function MatchesWonPerTeam  (props) {
   let matchesWon = arrayToObject(props.data)
   return (
     <Bar
@@ -22,3 +23,4 @@ export const MatchesWonPerTeam = (props) => {
     />
   )
 }
+export default MatchesWonPerTeam;

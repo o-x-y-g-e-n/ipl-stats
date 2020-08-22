@@ -2,10 +2,12 @@ import React from 'react'
 import { HorizontalBar } from 'react-chartjs-2'
 import { arrayToObject } from '../../../utils'
 import { getRandomColor } from '../../../utils'
-export const MatchesPerVenue = (props) => {
+
+function MatchesPerVenue(props) {
   let matchesPerVenue = arrayToObject(props.data)
   return (
     <HorizontalBar
+      id="rumal"
       data={{
         labels: Object.keys(matchesPerVenue),
         datasets: [
@@ -24,3 +26,4 @@ export const MatchesPerVenue = (props) => {
     />
   )
 }
+export default MatchesPerVenue

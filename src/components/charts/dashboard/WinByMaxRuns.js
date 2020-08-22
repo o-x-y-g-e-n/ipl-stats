@@ -2,7 +2,7 @@ import React from 'react'
 import Card from '@material-ui/core/Card'
 import CardContent from '@material-ui/core/CardContent'
 
-export const WinByMaxRuns = (props) => {
+function WinByMaxRuns(props) {
   return (
     <Card>
       <CardContent>
@@ -15,3 +15,4 @@ export const WinByMaxRuns = (props) => {
     </Card>
   )
 }
+export default WinByMaxRuns
