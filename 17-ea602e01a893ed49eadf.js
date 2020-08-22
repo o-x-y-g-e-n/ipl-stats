@@ -1,0 +1,2 @@
+(window.webpackJsonp=window.webpackJsonp||[]).push([[17],{UMOI:function(e,a,t){"use strict";t.r(a);var n=t("q1tI"),s=t.n(n),o=t("UDbo"),c=t("Al62");a.default=function(e){var a=Object(c.a)(e.data);return s.a.createElement(o.Bar,{options:{responsive:!0},data:{labels:Object.keys(a),datasets:[{label:"Matches Won By Team",data:Object.values(a),backgroundColor:Object(c.b)(Object.keys(a).length)}]}})}}}]);
+//# sourceMappingURL=17-ea602e01a893ed49eadf.js.map

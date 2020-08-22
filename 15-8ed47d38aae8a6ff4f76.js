@@ -1,0 +1,2 @@
+(window.webpackJsonp=window.webpackJsonp||[]).push([[15],{uA2R:function(e,a,t){"use strict";t.r(a);var n=t("q1tI"),o=t.n(n),s=t("UDbo"),r=t("Al62");a.default=function(e){var a=Object(r.a)(e.data);return o.a.createElement(s.HorizontalBar,{id:"rumal",data:{labels:Object.keys(a),datasets:[{label:"Matches Per Venue",backgroundColor:Object(r.b)(Object.keys(a).length),data:Object.values(a)}]},options:{responsive:!0}})}}}]);
+//# sourceMappingURL=15-8ed47d38aae8a6ff4f76.js.map

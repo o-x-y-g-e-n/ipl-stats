@@ -1,0 +1,2 @@
+(window.webpackJsonp=window.webpackJsonp||[]).push([[18],{mnSl:function(t,a,e){"use strict";e.r(a);var o=e("q1tI"),n=e.n(o),r=e("UDbo"),l=e("Al62");a.default=function(t){var a=t.data.sort((function(t,a){return a.totalCount-t.totalCount})).slice(0,5);return a=Object(l.a)(a),n.a.createElement(r.Polar,{type:"polarArea",data:{labels:Object.keys(a),datasets:[{label:"Top Players of the Match",data:Object.values(a),backgroundColor:Object(l.b)(5)}]},options:{responsive:!0}})}}}]);
+//# sourceMappingURL=18-4372ba49d212444d358a.js.map

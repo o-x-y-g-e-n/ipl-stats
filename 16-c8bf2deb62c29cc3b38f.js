@@ -1,0 +1,2 @@
+(window.webpackJsonp=window.webpackJsonp||[]).push([[16],{"4GhX":function(e,a,t){"use strict";t.r(a);var r=t("q1tI"),n=t.n(r),o=t("UDbo"),s=t("Al62"),l=t("HMs9"),c=t.n(l);a.default=function(e){var a=Object(s.a)(e.data);return n.a.createElement(c.a,{offset:-30},n.a.createElement(o.Line,{type:"line",data:{labels:Object.keys(a),datasets:[{label:"Matches Per Year",data:Object.values(a),fill:!1,borderColor:"#5F7DF5",borderWidth:1,backgroundColor:"#2196f3"}]},options:{responsive:!0,title:"Matches Per Year"}}))}}}]);
+//# sourceMappingURL=16-c8bf2deb62c29cc3b38f.js.map
