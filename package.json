@@ -17,9 +17,9 @@
     "gatsby-source-filesystem": "^2.3.24",
     "gatsby-transformer-csv": "^2.3.10",
     "prop-types": "^15.7.2",
-    "react": "^16.8.0",
+    "react": "^16.13.1",
     "react-chartjs-2": "^2.10.0",
-    "react-dom": "^16.8.0",
+    "react-dom": "^16.13.1",
     "react-helmet": "^6.1.0",
     "react-hot-loader": "^4.12.21",
     "react-lazyload": "^3.0.0",
@@ -40,6 +40,7 @@
     "format": "prettier --write src/**/*.{js,jsx}",
     "start": "npm run develop",
     "serve": "gatsby serve",
+    "deploy": "gatsby build --prefix-paths && gh-pages -d public",
     "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\""
   }
 }

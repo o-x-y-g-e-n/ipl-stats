@@ -1,4 +1,5 @@
 module.exports = {
+  pathPrefix: "/ipl-stats",
   siteMetadata: {
     title: `IPL Statistics`,
     description: `IPL Statistics for the given data.`,
@@ -18,7 +19,7 @@ module.exports = {
       options: {
         name: `ipl-stats`,
         short_name: `ipl-stats`,
-        start_url: `/`,
+        start_url: `.`,
         background_color: `#663399`,
         theme_color: `#663399`,
         display: `minimal-ui`,
